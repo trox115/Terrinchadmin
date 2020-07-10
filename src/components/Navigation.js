@@ -7,17 +7,22 @@ import SideNav, {
   NavIcon,
   NavText,
 } from '@trendmicro/react-sidenav';
+import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
 // Be sure to include styles at some point, probably during your bootstraping
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 
 const NavBar = ({ ...props }) => {
   return (
+  
     <SideNav
       onSelect={selected => {
         
       }}
     >
+
       <SideNav.Toggle />
       <SideNav.Nav defaultSelected="home">
         <NavItem eventKey="home">
@@ -56,6 +61,7 @@ const NavBar = ({ ...props }) => {
 
       </SideNav.Nav>
     </SideNav>
+  
   );
 };
 

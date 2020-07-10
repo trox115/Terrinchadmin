@@ -1,4 +1,6 @@
 /* Shrinking the sidebar from 250px to 80px and center aligining its content*/
+@import "~react-vis/dist/style";
+
 #sidebar.active {
     min-width: 80px;
     max-width: 80px;
