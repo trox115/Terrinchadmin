@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
+import { getMonth, set } from 'date-fns'
 import {Bar,Line,Pie} from 'react-chartjs-2'
 
 
@@ -10,7 +10,7 @@ const HomePage= ({...props}) => {
   const [ocupadas,setOcupadas] = useState([])
   const [sujas,setSujas] = useState([])
   const [livre, setLivre] = useState([]);
-
+  const [meses,setMeses] =useState([0,0,0,0,0,0,0,0,0,0,0,0])
       async function fetchData() {
         const response = await fetch('http://localhost:3001/casas/index');
         const data = await response.json();
@@ -24,8 +24,25 @@ const HomePage= ({...props}) => {
       }
       
       useEffect(() => {
+        let stop =0
+
         if(clientes.length ===0){
           fetchClie()
+        }
+        else if(clientes.length>0 &&stop === 0){
+          stop =1
+          clientes.forEach(cliente =>{
+            console.log(cliente)
+            let date = new Date(cliente.created_at)
+            let mes = getMonth(date)
+            let novoMes = meses
+            console.log(novoMes)
+            novoMes[mes]+=1
+           setMeses(novoMes)
+           
+            
+          })
+          console.log(meses)
         }
        if(casas.length===0){
         fetchData()
@@ -56,8 +73,8 @@ const HomePage= ({...props}) => {
       })
       
     }
-    console.log(clientes)
-      }, [casas,ocupadas,livre,sujas,clientes]);
+   
+      }, [casas,ocupadas,livre,sujas,clientes,meses]);
 
       
       let data = {
@@ -85,12 +102,7 @@ const HomePage= ({...props}) => {
         labels:['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Agosto','Setembro','Outubro','Novembro','Deembro'],
         datasets:[{
           label:'Ocupação Por mês',
-        data:[
-          1,
-          2,
-          3,
-          10,16
-        ],
+        data:meses,
         backgroundColor:[
           'rgba(255,99,132,1)',
           'rgba(123, 239, 178, 1)',
